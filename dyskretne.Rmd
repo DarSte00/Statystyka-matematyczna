@@ -1,0 +1,72 @@
+---
+title: "Rozkłady dyskretne"
+author: "Dariusz Stefański"
+date: Raport z `r format(Sys.time(), "%a %b %d %X %Y")`
+output: html_document
+---
+
+```{r ustawienia, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(fastGraph)
+```
+
+## Rozkład dwumianowy
+
+Na tym spotkaniu (18 X 2021) omówimy najważniejsze charakterystyki rozkładów dyskretnych - teoretycznych modeli. Na początku - rozkład Bernoullego, dwumianowy.
+
+**??** Przeciętnie 58% konsumentów preferuje Pepsi, nie Coca-Colę. Jaka jest szansa, że w grupie 40 osób znajdziemy co najmniej 30 osób preferujących Pepsi?
+
+Jest to rozkład dwumianowy o prawdopodobieństwie sukcesu 0,58. Liczba prób wynosi 40. P(X>=30)=1-P(X\<30)=???
+
+Aby narysować rozkłady, zainstalować należy pakiet o nazwie 'fastGraph'.
+
+```{r}
+shadeDist(ddist="dbinom",c(0,40),parm1=40,parm2=0.58)
+```
+
+Aby odczytać prawdopodobieństwo **P(X>=30)**:
+
+```{r}
+shadeDist(ddist="dbinom",c(29,40),parm1=40,parm2=0.58,lower.tail = FALSE)
+```
+
+Tradycyjna funkcja wbudowana w pakiet bazowy R, to:
+
+```{r}
+pbinom(29,size=40,prob=0.58,lower.tail=FALSE)
+```
+
+## Rozkład Poissona
+
+Rozkład ten jest szczególnym, granicznym przypadkiem rozkładu dwumianowego - z powodu masowego charakteru zdarzeń i jedynie szczątkowego prawdopodobieństwa sukcesu.
+
+Rozkład Poissona jest bardzo skośny, a jego jedyny parametr - lambda jest jednocześnie średnią i wariancją.
+
+Przykład 2. W pewnej fabryce norma jakości wynosi średnio 2 wadliwe żarówki na 100 tysięcy wyprodukowanych. Jaka jest szansa, że w zamówieniu liczącym 300 żarówek znajdziemy co najmniej 5 wadliwych? (skrót rozkładu w R to "pois")
+
+```{r}
+
+```
+
+Oraz komendą:
+
+```{r}
+ppois(4,lambda=2,lower.tail=FALSE)
+```
+
+## Rozkład normalny
+
+**Przykład 3.** Miesięczne zużycie energii elekt.(kWh) w rodz. czteroosobowych ma rozkład N(300,100).
+a) Obliczyć prawdopodobieństwo zużycia ponad 450 kWh w miesiącu przez losowo wybraną
+rodzinę czteroosobową.
+
+```{r}
+shadeDist(ddist="dnorm",450,parm1=300,parm2=100,lower.tail = FALSE)
+```
+
+b) Obliczyć prawdopodobieństwo, że wśród wybranych rodzin średnie zużycie
+energii będzie niższe niż 320 kWh.
+
+```{r}
+shadeDist(ddist="dnorm",320,parm1=300,parm2=100,lower.tail = TRUE)
+```
